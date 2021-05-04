@@ -6,7 +6,7 @@
   {% for el in all_links %}
   <div class="container">
         <a href ="{{ el.link }}">{{ el.link }}</a>
-        {{ el.title }} - <a href="{% url 'delete' el.id %}">Delete</a>
+        {{ el.title }} - <a class="btn btn-outline-success btn-sm" href="{% url 'delete' el.id %}">Delete</a>
   </div>
     {% endfor %}
 {% endblock %}

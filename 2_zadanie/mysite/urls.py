@@ -8,6 +8,6 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('admin/', admin.site.urls),
     path('links/',views.link_show, name='links'),
-    re_path('^(?P<pk>\d+)/delete/', views.LinkDeleteView.as_view(), name='delete'),
+    path('<int:id>/delete/', views.LinkDeleteView.as_view(), name='delete'),
     path('create_link/', views.create, name ='create_link')
 ]

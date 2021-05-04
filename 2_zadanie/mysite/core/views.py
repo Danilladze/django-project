@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
@@ -7,7 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import link
 from .forms import LinkForm
 from django.urls import reverse_lazy
-from django.views.generic.edit import DeleteView
+from django.views.generic import DeleteView
 
 @login_required
 def home(request):
@@ -20,7 +20,6 @@ def create(request):
         form = LinkForm(request.POST)
         if form.is_valid():
             form.save()
-
     form = LinkForm()
 
     data = {
@@ -36,10 +35,13 @@ def link_show(request):
 
 
 class LinkDeleteView(DeleteView):
-    model = link
+    # model = link
     template_name = 'delete_db.html'
-    context_object_name = 'link'
-    success_url = reverse_lazy('home')
+    # context_object_name = 'link'
+    success_url = reverse_lazy('links')
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(link, id=id_)
 
 
 def signup(request):

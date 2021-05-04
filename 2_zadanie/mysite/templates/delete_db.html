@@ -1,14 +1,11 @@
-<!Doctype html>
-<html>
-<head>
-<meta charset='utf-8'>
-<title></title>
-</head>
-<body>
-<from action="" method='post'>
+{% extends 'base.html' %}
+
+{% block content %}
+<form action="." method='POST'>
    {% csrf_token %}
    <p>Are you sure u want to delete this "{{ link }}" link?</p>
-<input type="submit" value="Delete">
+<button class="btn btn-outline-success" type="submit">Delete</button>
+
 </form>
-</body>
-</html>
+
+{% endblock %}
