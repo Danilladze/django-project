@@ -1,9 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Homepage</h2>
-  <p>Welcome to My Site, {% if user.is_authenticated %}{{ user.username }}{% else %}visitor{% endif %}!</p>
-  <p>
-    <strong>Total users registered: </strong> {{ count }}
-  </p>
+  <p><strong>Welcome</strong>, {% if user.is_authenticated %}{{ user.username }}{% else %}visitor{% endif %}!</p>
+    <form class="d-flex" method="post">
+        {% csrf_token %}
+        {{ link_form.link }}
+        <button class="btn btn-outline-success" type="submit">Add</button>
+    </form>
 {% endblock %}
+
+

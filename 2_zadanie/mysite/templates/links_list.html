@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <p>Theese are your links , {% if user.is_authenticated %}{{ user.username }}{% else %}visitor{% endif %}!</p>
+
+  {% for el in all_links %}
+  <div class="container">
+        <a href ="{{ el.link }}">{{ el.link }}</a>
+        {{ el.title }} - <a href="{% url 'delete' el.id %}">Delete</a>
+  </div>
+    {% endfor %}
+{% endblock %}
+
+
