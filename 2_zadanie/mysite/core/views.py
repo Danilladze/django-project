@@ -35,9 +35,7 @@ def link_show(request):
 
 
 class LinkDeleteView(DeleteView):
-    # model = link
     template_name = 'delete_db.html'
-    # context_object_name = 'link'
     success_url = reverse_lazy('links')
     def get_object(self):
         id_ = self.kwargs.get("id")
