@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <p><strong>Welcome</strong>, {% if user.is_authenticated %}{{ user.username }}{% else %}visitor{% endif %}!</p>
+    <form class="d-flex" method="post">
+        {% csrf_token %}
+        {{ link_form.link }}
+        <button class="btn btn-outline-success" type="submit">Add</button>
+    </form>
+{% endblock %}
+
+
