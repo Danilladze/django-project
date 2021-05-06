@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import DeleteView
 from tldextract import extract
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.http import HttpResponse
 
 # Главная страница
 @login_required
@@ -24,8 +25,6 @@ def create(request):
         form = LinkForm(request.POST)
         if form.is_valid():
             form.save()
-            Link = form.cleaned_data['link']
-            link_value_check(Link)
     form = LinkForm()
 
     data = {
@@ -76,17 +75,3 @@ def signup(request):
     form = UserCreationForm()
     return render(request, 'registration/signup.html', {'form':form})
 
-
-
-# Проверка правильности линка
-
-class MyException(Exception):
-    pass
-
-def link_value_check(link):
-    tsd, td, tsu = extract(link)
-    domain_zone = ["ru","com","org","xyz","ua","рф"]
-    if tsu in domain_zone:
-        pass
-    # except:
-    #     raise MyException("msg here")

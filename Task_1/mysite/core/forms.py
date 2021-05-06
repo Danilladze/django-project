@@ -1,5 +1,7 @@
 from django import forms
 from .models import link
+from django.core.exceptions import ValidationError
+from tldextract import extract
 
     
 class LinkForm(forms.ModelForm):
@@ -8,3 +10,11 @@ class LinkForm(forms.ModelForm):
         model = link
         fields = ['link']
     
+    def clean_link(self):
+        domain_zone = ["ru","com","org","xyz","ua","рф"]
+        Link = self.cleaned_data['link']
+        tsd,td,tsu = extract(Link)
+        if (tsu not in domain_zone):
+            raise ValidationError('Input correct link!')
+        else:
+            return(Link)
