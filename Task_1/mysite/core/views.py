@@ -11,12 +11,14 @@ from django.views.generic import DeleteView
 from tldextract import extract
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+# Главная страница
 @login_required
 def home(request):
     link_form = LinkForm()
     create(request)
     return render(request, 'home.html', {'link_form':link_form})
 
+# Создания линка
 def create(request):
     if request.method == 'POST':
         form = LinkForm(request.POST)
@@ -32,8 +34,20 @@ def create(request):
 
     return render(request,'create_link.html',data) 
 
+# Удаление линка
+def delete_link(request, link_id):
+    Link = link.objects.get(pk = link_id)
+    Link.delete()
+    return redirect('links')
+
+# Удаление всех линков
+def delete_all_links(request, link_id):
+    Link = link.objects.all()
+    Link.delete()
+    return redirect('links')
 
 
+# Постраничный вывод линков
 @login_required
 def link_show(request):
     all_links = link.objects.order_by('-id')
@@ -50,14 +64,7 @@ def link_show(request):
     return render(request, 'links_list.html', {'all_links': page})
 
 
-class LinkDeleteView(DeleteView):
-    template_name = 'delete_db.html'
-    success_url = reverse_lazy('links')
-    def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(link, id=id_)
-
-
+# Регистрация
 def signup(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -70,6 +77,8 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form':form})
 
 
+
+# Проверка правильности линка
 
 class MyException(Exception):
     pass
